@@ -1,8 +1,10 @@
-from Object import *
+# from Object import *
+from ExtClasses import *
+import random
 
-class ScreenController(Object):
+class ScreenController():
     def __init__(self):
-        ObjectLists.listAllObjects.append(self)
+        # ObjectLists.listAllObjects.append(self)
         self.timer = 0
         self.order = 0
         self.shakeDelay = 0.03
@@ -13,7 +15,7 @@ class ScreenController(Object):
         self.shakeAmmount = 0
         self.shakeAmmountResolver =0
 
-    def ShakeScreen(self, ammount, resolveTime):
+    def shakeScreen(self, ammount, resolveTime):
         self.shakeAmmount = ammount
         self.shakeAmmountResolver = ammount
         self.timerOrigin = resolveTime

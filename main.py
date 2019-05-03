@@ -19,6 +19,7 @@ gameIcon = pygame.image.load(Constants.iconImage)
 pygame.display.set_icon(gameIcon)
 Debug = debug()
 scr = ScreenController()
+Global.scr = scr
 # Global.Sounds = sounds()
 
 # roomImage = pygame.image.load("assets/room.png").convert()
@@ -29,8 +30,8 @@ ObjectLists.listAllObjects.append(player)
 crosshair = Crosshair()
 ObjectLists.listAllObjects.append(crosshair)
 
-cube = Bomb()
-cube.x, cube.y = 360, 360
+# cube = Bomb()
+# cube.x, cube.y = 360, 360
 
 
 while True:                 # M A I N   L O O P
@@ -48,7 +49,7 @@ while True:                 # M A I N   L O O P
     # if pKey[K_ESCAPE]:
        #  sys.exit()
     if pKey[K_SPACE]:
-        scr.ShakeScreen(5, 1)
+        scr.shakeScreen(5, 1)
     if Constants.enemycount <= 0:
         Debug.Log(crosshair.xy)
     else:
@@ -56,6 +57,7 @@ while True:                 # M A I N   L O O P
 
     ObjectLists.listAllObjects.sort(key=operator.attrgetter('order'))
     screen.fill(Colors.cyan)
+    scr.update()
     for gameObject in ObjectLists.listAllObjects:
         gameObject.update()
         gameObject.draw(screen)

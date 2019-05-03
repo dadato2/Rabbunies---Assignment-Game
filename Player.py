@@ -1,15 +1,15 @@
 from Object import *
+from Bomb import Bomb
 
 # tmpisaacHead = makeSprite("assets/isaacHead.png", 8)
 # isaacHead = tmpisaacHead.images
 # tmpisaacBody = makeSprite("assets/isaacBody.png", 30)
 # isaacBody = tmpisaacBody.images
 playerSprite = pygame.image.load("assets/rabber.png")
-
+newBomb = None
 
 class Player (Object):
     def __init__(self):
-
 
         Global.player = self
         '''
@@ -27,8 +27,11 @@ class Player (Object):
 
         self.ypos = 300
         self.xpos = 300
+
         self.squareSize = 66
         self.rect = self.sprite.get_rect()
+        self.xy = (self.xpos - self.rect.center[0] + Constants.scr_shake_offset_x,
+                   self.ypos - self.rect.center[1] + Constants.scr_shake_offset_y)
         self.order = self.ypos + self.squareSize
         self.speed = 6
         self.decel = self.speed / 1.5
@@ -41,10 +44,12 @@ class Player (Object):
         self.strength = 0
         self.maxStrength = 100
 
-        self.tearDelay = 14
-        self.tearDelayCounter = self.tearDelay
+        self.bombDelay = 2
+        self.bombDelayCounter = 0
 
         self.accuracyOffset = 5
+
+        self.bombPresent = False
 
         self.isShooting = False
         self.pKey = pygame.key.get_pressed()
@@ -54,7 +59,7 @@ class Player (Object):
         # walking:
         self.walk()
         # shooting:
-        # self.shooting()
+        self.shooting()
         # set sprite
         # self.animateBody()
 
@@ -97,7 +102,6 @@ class Player (Object):
             self.spriteIndexBody = 0
 
     def walk(self):    # temporary xAcc and yAcc act as acceleration (will add a delay in future)
-        self.isShooting = self.pKey[K_UP] or self.pKey[K_DOWN] or self.pKey[K_LEFT] or self.pKey[K_RIGHT]
 
         if self.pKey[K_d]:  # right
             if self.xAcc < 0:
@@ -167,47 +171,31 @@ class Player (Object):
 
 
     def shooting(self):
-        if self.tearDelayCounter <= self.tearDelay:    # manage delay between tears, if you shoot a tear, the counter resets and regains value over time
-            self.tearDelayCounter += Time.deltaTime * 30
+        global newBomb
+        self.isCharging = pygame.mouse.get_pressed()[0]
 
-        if self.pKey[K_RIGHT]:
-            if self.tearAnimTimer <= 0:
-                self.spriteIndexHead = 2
-            if self.tearDelayCounter >= self.tearDelay:
-                self.shoot(directions.Right)
-                self.tearDelayCounter = 0
+        if not self.bombPresent and self.isCharging:
+            newBomb = Bomb()
+            self.bombPresent = True
 
-        elif self.pKey[K_LEFT]:
-            if self.tearAnimTimer <= 0:
-                self.spriteIndexHead = 6
-            if self.tearDelayCounter >= self.tearDelay:
-                self.shoot(directions.Left)
-                self.tearDelayCounter = 0
+        if self.bombDelayCounter <= self.bombDelay and self.isCharging and self.bombPresent:    # manage delay between bombs, if you shoot a bomb, the counter resets and regains value over time
+            self.bombDelayCounter += Time.deltaTime
 
-        elif self.pKey[K_UP]:
-            if self.tearAnimTimer <= 0:
-                self.spriteIndexHead = 4
-            if self.tearDelayCounter >= self.tearDelay:
-                self.shoot(directions.Up)
-                self.tearDelayCounter = 0
-
-        elif self.pKey[K_DOWN]:
-            if self.tearAnimTimer <= 0:
-                self.spriteIndexHead = 0
-            if self.tearDelayCounter >= self.tearDelay:
-                self.shoot(directions.Down)
-                self.tearDelayCounter = 0
-
-    def shoot(self, direction):
-        self.tearOffset = -self.tearOffset
-        self.Sound_tear_1.play()
-        if self.spriteIndexHead % 2 == 0:
-            self.spriteIndexHead += 1
-            self.tearAnimTimer = 0.2
-        #new_tear = Tear(direction, self)
+        if not self.isCharging and self.bombDelayCounter > 0 and self.bombPresent:
+            if newBomb != None:
+                newBomb
+            self.bombDelayCounter = 0
 
 
+    def shootBomb(self):
+        pass
+        # new_bomb = Bomb(direction, self)
+
+
+"""
     def draw(self, screen):
         self.order = self.ypos + self.squareSize
-        self.xy = (self.xpos - self.rect.center[0] + Constants.scr_shake_offset_x, self.ypos -self.rect.center[1] + Constants.scr_shake_offset_y)
+        self.xy = (self.xpos - self.rect.center[0] + Constants.scr_shake_offset_x,
+                   self.ypos -self.rect.center[1] + Constants.scr_shake_offset_y)
         screen.blit(self.sprite, self.xy)
+"""

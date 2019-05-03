@@ -19,6 +19,9 @@ GlobalMath = globalMath()
 class Global:
     player = None
     Sounds = None
+    Crosshair = None
+    scr = None
+
 
 class Constants:
     scr_width = 1080
@@ -40,7 +43,7 @@ class Constants:
 
 class ObjectLists:
     listAllObjects = []
-    listOfTears = []
+    listOfBombs = []
     listOfEnemies = []
 
 class Time:
@@ -66,6 +69,14 @@ class directions(Enum):
     Down = 1
     Left = 2
     Right = 3
+
+class bombVariant(Enum):
+    round = 0
+    dynamite = 1
+    grenade = 2
+    radio_carrot = 3
+    cube_3d = 4
+    head = 5
 
 '''class sounds:
     def __init__(self):
