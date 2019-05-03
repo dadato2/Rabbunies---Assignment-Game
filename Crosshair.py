@@ -33,7 +33,7 @@ class Crosshair (Object):
 
         self.spriteAngle %= 360
         self.sprite = pygame.transform.rotate(self._spriteOrigin, self.spriteAngle)
-        self.spriteScaleX = self.spriteScaleY = int(self.spriteScale*25 + 50)
+        self.spriteScaleX = self.spriteScaleY = int(self.spriteScale*30 + 50)
         self.sprite = pygame.transform.scale(self.sprite, (self.spriteScaleX, self.spriteScaleY))
 
         self.order = Constants.scr_height

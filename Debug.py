@@ -2,7 +2,6 @@ import pygame
 from ExtClasses import Constants
 
 class debug:
-
     def __init__(self):
         pygame.font.init()
         self.debugFont = pygame.font.SysFont('Comic Sans MS', 40)

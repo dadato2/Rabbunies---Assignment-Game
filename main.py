@@ -22,16 +22,11 @@ scr = ScreenController()
 Global.scr = scr
 # Global.Sounds = sounds()
 
-# roomImage = pygame.image.load("assets/room.png").convert()
-
-
 player = Player()
 ObjectLists.listAllObjects.append(player)
 crosshair = Crosshair()
 ObjectLists.listAllObjects.append(crosshair)
 
-# cube = Bomb()
-# cube.x, cube.y = 360, 360
 
 
 while True:                 # M A I N   L O O P
@@ -45,9 +40,9 @@ while True:                 # M A I N   L O O P
         if event.type == pygame.QUIT:
             sys.exit()
     pygame.display.update()
-    # screen.blit(roomImage, (0, 0))
-    # if pKey[K_ESCAPE]:
-       #  sys.exit()
+
+    if pKey[K_ESCAPE]:
+        sys.exit()
     if pKey[K_SPACE]:
         scr.shakeScreen(5, 1)
     if Constants.enemycount <= 0:

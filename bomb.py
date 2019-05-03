@@ -1,13 +1,11 @@
 from Object import *
+from bomb_explosion import Explosion
 from ScreenControl import ScreenController
 
 bombSprite = pygame.image.load("assets/Bomb.png")
 bombSprite = pygame.transform.scale(bombSprite, (50, 50))
 
-explosionSprite = makeSprite("assets/explosion.png", 12)
-
 class Bomb(Object):
-
     def __init__(self):
         ObjectLists.listAllObjects.append(self)
         ObjectLists.listOfBombs.append(self)
@@ -25,10 +23,11 @@ class Bomb(Object):
         self.rect = self.sprite.get_rect()
         self.mouseButtonPressed = None
 
+        self.explosionScale = 200
         self.direction = None
         self.fuse = 2
         self.fuseOriginal = self.fuse
-        self.heightMultiplier = 20
+        self.heightMultiplier = 30
         self.speed = 5
         self.target = None
 
@@ -45,6 +44,7 @@ class Bomb(Object):
             self.target = Global.Crosshair.xy
             self.direction = GlobalMath.Angle(self, Global.Crosshair)
             self.fuse = Global.Crosshair.distFromPLayer / 250 * Global.Crosshair.spriteScale/Global.Crosshair.scaleTime
+            self.fuseOriginal = self.fuse
             self.thrown = True
 
         if not self.thrown:
@@ -61,8 +61,8 @@ class Bomb(Object):
 
         if self.fuse <= 0:
             Global.player.bombPresent = False
-            Global.scr.shakeScreen(20, 0.3)
+            newExpl = Explosion(self.xpos+self.rect.center[0], self.ypos+self.rect.center[1], self.explosionScale)
+            Global.scr.shakeScreen(5, 0.3)
             ObjectLists.listOfBombs.remove(self)
             ObjectLists.listAllObjects.remove(self)
-
-
+            del self

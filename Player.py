@@ -108,9 +108,8 @@ class Player (Object):
                 self.xAcc = 0
             if self.xAcc < self.speed:
                 self.xAcc += self.accel/10
-            if self.xpos > Constants.scr_width - Constants.playerWidth:
+            if self.xpos > Constants.scr_width - self.rect.w:
                 self.xAcc = -0.01
-
 
         if self.pKey[K_a]:  # left
             if self.xAcc > 0:
@@ -120,7 +119,6 @@ class Player (Object):
             if self.xpos < 40:
                 self.xAcc = 0.1
 
-
         if self.pKey[K_w]:  # up
             if self.yAcc > 0:
                 self.yAcc = 0
@@ -129,15 +127,13 @@ class Player (Object):
             if self.ypos < 40:
                 self.yAcc = 0.1
 
-
         if self.pKey[K_s]:  # down
             if self.yAcc < 0:
                 self.yAcc = 0
             if self.yAcc < self.speed:
                 self.yAcc += self.accel/10
-            if self.ypos > Constants.scr_height - Constants.playerHeight:
+            if self.ypos > Constants.scr_height - self.rect.h:
                 self.yAcc = +0.1
-
 
         if not self.pKey[K_a] and not self.pKey[K_d]:   # manage deceleration for horizontal input
             for i in range(0, int(self.decel)):
