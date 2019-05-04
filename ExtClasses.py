@@ -2,7 +2,6 @@ from enum import Enum
 import math, pygame
 
 
-
 class globalMath:
     def __init__(self):
         self.temp = 0
@@ -21,6 +20,7 @@ class Global:
     Sounds = None
     Crosshair = None
     scr = None
+    SelectedBomb = 0
 
 
 class Constants:
@@ -31,7 +31,7 @@ class Constants:
     scr_shake_offset_y = 0
 
     fps = 60
-    caption = "Rabbunies: The element of explode!"
+    caption = "Rabbunnies: The element of explode!"
     iconImage = "icon.png"
 
     debugMessage = ""
@@ -70,7 +70,7 @@ class directions(Enum):
     Left = 2
     Right = 3
 
-class bombVariant(Enum):
+class bombVariant():
     round = 0
     dynamite = 1
     grenade = 2

@@ -14,6 +14,7 @@ class Explosion (Object):
         self.spriteTimer = 0
         self.sprite = self.spriteImages[0]
         self.rect = self.sprite.get_rect()
+        Global.scr.shakeScreen(scale*.05, scale*0.001)
 
     def scaleImages(self):
         for i in range(0, 12):

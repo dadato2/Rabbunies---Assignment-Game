@@ -45,10 +45,7 @@ while True:                 # M A I N   L O O P
         sys.exit()
     if pKey[K_SPACE]:
         scr.shakeScreen(5, 1)
-    if Constants.enemycount <= 0:
-        Debug.Log(crosshair.xy)
-    else:
-        Debug.Log(Constants.enemycount)
+
 
     ObjectLists.listAllObjects.sort(key=operator.attrgetter('order'))
     screen.fill(Colors.cyan)

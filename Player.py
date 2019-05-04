@@ -1,5 +1,5 @@
 from Object import *
-from Bomb import Bomb
+from Bomb_Variants import *
 
 # tmpisaacHead = makeSprite("assets/isaacHead.png", 8)
 # isaacHead = tmpisaacHead.images
@@ -171,7 +171,19 @@ class Player (Object):
         self.isCharging = pygame.mouse.get_pressed()[0]
 
         if not self.bombPresent and self.isCharging:
-            newBomb = Bomb()
+            i = random.randrange(0, 6)
+            if i == 0:
+                newBomb = Dynamite()
+            elif i == 1:
+                newBomb = Round()
+            elif i == 2:
+                newBomb = Grenade()
+            elif i == 3:
+                newBomb = Carrot()
+            elif i == 4:
+                newBomb = Cube()
+            else:
+                newBomb = Head()
             self.bombPresent = True
 
         if self.bombDelayCounter <= self.bombDelay and self.isCharging and self.bombPresent:    # manage delay between bombs, if you shoot a bomb, the counter resets and regains value over time

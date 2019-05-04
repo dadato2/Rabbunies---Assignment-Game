@@ -1,12 +1,12 @@
-* Change the draw method to be on the Object parent class, making life easier
+DONE Change the draw method to be on the Object parent class, making life easier
 * Make the bomb a parent class and the smaller bombs just have the different sprites and 
   attributes
 
 
-* Add throwing of bomb:
+DONE (could use tweaking tho) Add throwing of bomb:
 	- uses the cursor's position to throw bomb in direction of it, with power
 
-* Add different kinds of bombs:
+*--doing* Add different kinds of bombs:
 	- dynamite
 	- round bomb
 	- grenade
@@ -14,9 +14,9 @@
 	- 3D Cube
 	- Head of a Fallen Brother
 
-* Add explosions
+DONE Add explosions
 
-* Add special effects to bombs
+DONE (could add more if I have time) Add special effects to bombs
 	- change size depending on height
 	- could give some rotations
 
@@ -34,4 +34,12 @@
 * Add win/lose state
 
 * Add different effects to bombs
+
+
+
+
+
+
+
+???? ????????? ? ????.
 	
