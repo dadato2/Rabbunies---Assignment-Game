@@ -7,9 +7,6 @@ from Enemy_Variants import *
 from Bomb import *
 from ScreenControl import ScreenController
 
-lastTime = 0
-nowTime = 0
-
 pygame.init()
 pygame.mixer.init()
 time = pygame.time.Clock()
@@ -24,17 +21,27 @@ Global.scr = scr
 
 player = Player()
 ObjectLists.listAllObjects.append(player)
-enemy = Bun1()
-enemy = Bun2()
-enemy = Bun3()
 crosshair = Crosshair()
 ObjectLists.listAllObjects.append(crosshair)
 
+while True:     # T I T L E   S C R E E N
+    time.tick(Constants.fps)
+    screen.fill(Colors.red)
+    screen.blit(pygame.font.SysFont('Comic Sans MS', 60).render("Rabbunnies!", False, (255, 255, 255)), (350, 100))
+    screen.blit(pygame.font.SysFont('Comic Sans MS', 40).render("Press Space to start!", False, (0, 0, 0)), (310, 300))
+    if pygame.key.get_pressed()[K_SPACE]:
+        break
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
+    pygame.display.update()
+
+nowTime = pygame.time.get_ticks()
+lastTime = nowTime
 
 while True:                 # M A I N   L O O P
-
     nowTime = pygame.time.get_ticks()
-    Time.deltaTime = (nowTime-lastTime) / 1000
+    Time.deltaTime = (nowTime-lastTime) / 1000 % 1
     lastTime = nowTime
     time.tick(Constants.fps)
     pKey = pygame.key.get_pressed()
@@ -45,8 +52,6 @@ while True:                 # M A I N   L O O P
 
     if pKey[K_ESCAPE]:
         sys.exit()
-    if pKey[K_SPACE]:
-        scr.shakeScreen(5, 1)
 
     if player.Health <= 0:
         Debug.Log("Game Over")
@@ -60,4 +65,15 @@ while True:                 # M A I N   L O O P
         gameObject.update()
         gameObject.draw(screen)
 
+    if len(ObjectLists.listOfEnemies) <= 0:
+        for times in range(0, random.randrange(1, 4)):
+            idd = random.randrange(3)
+            if idd == 0:
+                enemy = Bun1()
+            elif idd == 1:
+                enemy = Bun2()
+            else:
+                enemy = Bun3()
     screen.blit(Debug.debugtextsurface, (10, 10))
+    screen.blit(pygame.font.SysFont('Comic Sans MS', 30).render("Enemies Left : " + str(len(ObjectLists.listOfEnemies)),
+                                                                False, (0, 0, 0)), (10, Constants.scr_height - 50))

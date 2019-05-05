@@ -24,8 +24,15 @@ class Enemy(Object):
         # draw
         self.sprite = None
         self.rect = None
-        self.ypos = random.randrange(30, Constants.scr_height-30)
-        self.xpos = random.randrange(30, Constants.scr_width-30)
+        self.xpos = random.randrange(-300, Constants.scr_width +300)
+        if 0 < self.xpos < Constants.scr_width:
+            if random.getrandbits:
+                self.ypos = random.randrange(-300, -100)
+            else:
+                self.ypos = random.randrange(Constants.scr_height + 10, Constants.scr_height + 300)
+        else:
+            self.ypos = random.randrange(-300, Constants.scr_height + 300)
+
         self.order = self.ypos
         self.invincible = 0
         self.invincibleTime = 2  # seconds
@@ -44,7 +51,7 @@ class Enemy(Object):
         self.waitThere = 0
         # bomb throwing
         self.bombDelay = 5
-        self.bombDelayCounter = random.randrange(300, 500) * 0.01
+        self.bombDelayCounter = random.randrange(500, 800) * 0.01
 
     def update(self):
         if self.Health <= 0:
@@ -113,7 +120,7 @@ class Enemy(Object):
         self.yAcc = math.cos(self.direction) * self.speed
 
         # self.enemyCollision()
-        if self.distFromTarget > 1 and self.waitThere <= 0:
+        if self.distFromTarget > 5 and self.waitThere <= 0:
             self.xpos = round(self.xpos +self.xAcc)
             self.ypos = round(self.ypos +self.yAcc)
         elif self.waitThere <= 0:

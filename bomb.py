@@ -58,6 +58,10 @@ class Bomb(Object):
             self.fuse -= Time.deltaTime
             self.height = (self.fuseOriginal/2 - math.fabs((self.fuseOriginal/2) - self.fuse)) * self.heightMultiplier
             # self.spriteOrigin = bombSprite
+            if self.scaler < 0:
+                self.scaler = 0
+            if self.height < 0:
+                self.height = 0
             if not self.ignoreHeight:
                 self.scaledSpite = pygame.transform.scale(self.spriteOrigin,
                                                       (int(self.scaler + self.height), int(self.scaler + self.height)))

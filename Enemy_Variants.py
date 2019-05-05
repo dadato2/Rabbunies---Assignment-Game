@@ -44,7 +44,7 @@ class Bun2(Enemy):
     def __init__(self):
         super().__init__()
         self.Health = 2
-        self.speed = 1.5
+        self.speed = 2
         self.accuracyOffset = 2
         self.bomb_type = "dynamite"
         self.bombDelayAdderMin, self.bombDelayAdderMax = -1, 2
@@ -59,7 +59,7 @@ class Bun3(Enemy):
     def __init__(self):
         super().__init__()
         self.Health = 3
-        self.speed = 2
+        self.speed = 3
         self.accuracyOffset = 0
         self.bomb_type = "round"
         self.bombDelayAdderMin, self.bombDelayAdderMax = -1, 1
