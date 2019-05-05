@@ -46,7 +46,6 @@ while True:                 # M A I N   L O O P
     if pKey[K_SPACE]:
         scr.shakeScreen(5, 1)
 
-
     ObjectLists.listAllObjects.sort(key=operator.attrgetter('order'))
     screen.fill(Colors.cyan)
     scr.update()

@@ -34,7 +34,7 @@ class Constants:
     caption = "Rabbunnies: The element of explode!"
     iconImage = "icon.png"
 
-    debugMessage = ""
+    debugMessage = "Hello"
 
     playerWidth = 56
     playerHeight = 66

@@ -1,27 +1,29 @@
 from Object import *
 from Bomb_Variants import *
 
-# tmpisaacHead = makeSprite("assets/isaacHead.png", 8)
-# isaacHead = tmpisaacHead.images
-# tmpisaacBody = makeSprite("assets/isaacBody.png", 30)
-# isaacBody = tmpisaacBody.images
-playerSprite = pygame.image.load("assets/rabber.png")
+idle_animation = makeSprite("assets/rabber_idle.png", 4).images
+for i in range(0, 4):
+    idle_animation[i] = pygame.transform.scale(idle_animation[i], (54, 78))
+
+running_animation = makeSprite("assets/rabber_running.png", 6).images
+for i in range(0, 6):
+    running_animation[i] = pygame.transform.scale(running_animation[i], (54, 78))
+
 newBomb = None
 
 class Player (Object):
     def __init__(self):
 
         Global.player = self
-        '''
-        self.spriteIndexHead = 0
-        self.spriteHead = isaacHead[self.spriteIndexHead]
-        self.spriteIndexBody = 0
-        self.spriteIndexAddTen = 0
-        self.spriteBody = isaacBody[self.spriteIndexBody]
-        self.spriteIndexBodyDelay = 0
-        '''
-        self.height = 66
-        self.sprite = playerSprite
+        # sprite handlings
+        self.anim_idle = idle_animation
+        self.anim_run = running_animation
+        self.animIndex = 0
+        self.animDelay = 0.2
+        self.animTimer = 0
+        self.isFacingLeft = False
+
+        self.sprite = self.anim_idle[self.animIndex]
         # self.rect = self.spriteHead.get_rect()
         # self.Sound_tear_1 = Global.Sounds.player_tear_1
 
@@ -38,6 +40,7 @@ class Player (Object):
         self.accel = self.speed / 1.5
         self.xAcc = 0.0
         self.yAcc = 0.0
+        self.running = False
         self.tempxAcc = 0.0
         self.tempyAcc = 0.0
 
@@ -51,7 +54,6 @@ class Player (Object):
 
         self.bombPresent = False
 
-        self.isShooting = False
         self.pKey = pygame.key.get_pressed()
 
     def update(self):
@@ -61,47 +63,40 @@ class Player (Object):
         # shooting:
         self.shooting()
         # set sprite
-        # self.animateBody()
+        self.animate()
 
-
-    def animateBody(self):
-        if self.spriteIndexBodyDelay > 0:
-            self.spriteIndexBodyDelay -= Time.deltaTime
-
-        if self.spriteIndexBodyDelay <= 0:
-            if not self.yAcc < 0:
-                self.spriteIndexBody = (self.spriteIndexBody+1) % 10
-            else:
-                if self.spriteIndexBody > 0:
-                    self.spriteIndexBody -= 1
-                else:
-                    self.spriteIndexBody = 10
-        if self.spriteIndexBody > 10:
-            self.spriteIndexBody = 10
-        if -0.05 < self.tempxAcc <= 0.05 and -0.05 < self.tempyAcc <= 0.05:
-            self.spriteIndexAddTen = 0
-            self.spriteIndexBody = 0
-
-        if math.fabs(self.tempxAcc) > math.fabs(self.tempyAcc):
-            if self.tempxAcc < 0:
-                self.spriteIndexAddTen = 20
-                if self.spriteIndexBodyDelay <= 0:
-                    self.spriteIndexBodyDelay = 0.1-(math.fabs(self.tempxAcc) / self.accel)/100
-            if self.tempxAcc > 0:
-                self.spriteIndexAddTen = 10
-                if self.spriteIndexBodyDelay <= 0:
-                    self.spriteIndexBodyDelay = 0.1-(math.fabs(self.tempxAcc) / self.accel)/100
+    def animate(self):
+        if self.xAcc < 0:
+            self.isFacingLeft = False
         else:
-            self.spriteIndexAddTen = 0
-            if self.spriteIndexBodyDelay <= 0:
-                self.spriteIndexBodyDelay = 0.1-(math.fabs(self.tempyAcc) / self.accel)/100
+            self.isFacingLeft = True
 
-        if self.spriteIndexBody > 10:
-            self.spriteIndexBody = 10
-        if self.spriteIndexBody < 0:
-            self.spriteIndexBody = 0
+        if self.yAcc != 0 or self.xAcc != 0:
+            self.running = True
+            self.animDelay = 0.1
+        else:
+            self.running = False
+            self.animDelay = 0.2
 
-    def walk(self):    # temporary xAcc and yAcc act as acceleration (will add a delay in future)
+        if not self.running:
+            self.animIndex %= 4
+            self.animTimer += Time.deltaTime
+            if self.animTimer >= self.animDelay:
+                self.animTimer = 0
+                self.animIndex = (self.animIndex+1) % 4
+            self.sprite = self.anim_idle[self.animIndex]
+        else:
+            self.animIndex %= 6
+            self.animTimer += Time.deltaTime
+            if self.animTimer >= self.animDelay:
+                self.animTimer = 0
+                self.animIndex = (self.animIndex + 1) % 6
+            if self.isFacingLeft:
+                self.sprite = self.anim_run[self.animIndex]
+            else:
+                self.sprite = pygame.transform.flip(self.anim_run[self.animIndex], True, False)
+
+    def walk(self):    # pressing movement keys WASD increases/decreases acceleration
 
         if self.pKey[K_d]:  # right
             if self.xAcc < 0:
@@ -165,7 +160,6 @@ class Player (Object):
 
         # reset direction animation:
 
-
     def shooting(self):
         global newBomb
         self.isCharging = pygame.mouse.get_pressed()[0]
@@ -173,17 +167,17 @@ class Player (Object):
         if not self.bombPresent and self.isCharging:
             i = random.randrange(0, 6)
             if i == 0:
-                newBomb = Dynamite()
+                newBomb = Dynamite(self)
             elif i == 1:
-                newBomb = Round()
+                newBomb = Round(self)
             elif i == 2:
-                newBomb = Grenade()
+                newBomb = Grenade(self)
             elif i == 3:
-                newBomb = Carrot()
+                newBomb = Carrot(self)
             elif i == 4:
-                newBomb = Cube()
+                newBomb = Cube(self)
             else:
-                newBomb = Head()
+                newBomb = Head(self)
             self.bombPresent = True
 
         if self.bombDelayCounter <= self.bombDelay and self.isCharging and self.bombPresent:    # manage delay between bombs, if you shoot a bomb, the counter resets and regains value over time
@@ -193,17 +187,3 @@ class Player (Object):
             if newBomb != None:
                 newBomb
             self.bombDelayCounter = 0
-
-
-    def shootBomb(self):
-        pass
-        # new_bomb = Bomb(direction, self)
-
-
-"""
-    def draw(self, screen):
-        self.order = self.ypos + self.squareSize
-        self.xy = (self.xpos - self.rect.center[0] + Constants.scr_shake_offset_x,
-                   self.ypos -self.rect.center[1] + Constants.scr_shake_offset_y)
-        screen.blit(self.sprite, self.xy)
-"""

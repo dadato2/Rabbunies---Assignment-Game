@@ -2,11 +2,9 @@ from Object import *
 from bomb_explosion import Explosion
 from ScreenControl import ScreenController
 
-bombSprite = pygame.image.load("assets/Bomb.png")
-bombSprite = pygame.transform.scale(bombSprite, (50, 50))
 
 class Bomb(Object):
-    def __init__(self):
+    def __init__(self, src):
         ObjectLists.listAllObjects.append(self)
         ObjectLists.listOfBombs.append(self)
         self.xpos = Global.player.xpos
@@ -14,7 +12,7 @@ class Bomb(Object):
         self.xy = (self.xpos, self.ypos)
         self.order = self.ypos
         self.height = 0
-        self.scaler = 50
+        self.scaler = 40
         self.maxHeight = 1
         self.thrown = False
         self.mouseButtonPressed = None
@@ -24,13 +22,17 @@ class Bomb(Object):
         self.heightMultiplier = 30
         self.target = None
 
+        self.source = src
+
+        self.ignoreHeight = False
+
         self.explosionScale = 200
         self.speed = 5
 
-        self.spriteOrigin = bombSprite
+        self.spriteOrigin = None
         self.scaledSpite = self.spriteOrigin
         self.sprite = self.spriteOrigin
-        self.rect = self.sprite.get_rect()
+        self.rect = None
 
     def moveTowardTarget(self):
         self.dirx = math.sin(self.direction) * self.speed
@@ -50,20 +52,22 @@ class Bomb(Object):
             self.thrown = True
 
         if not self.thrown:
-            self.xpos, self.ypos = Global.player.xpos + 50, Global.player.ypos
+            self.xpos, self.ypos = Global.player.xpos + 25, Global.player.ypos
 
         if self.thrown:
             self.fuse -= Time.deltaTime
             self.height = (self.fuseOriginal/2 - math.fabs((self.fuseOriginal/2) - self.fuse)) * self.heightMultiplier
             # self.spriteOrigin = bombSprite
-            self.scaledSpite = pygame.transform.scale(self.spriteOrigin,
+            if not self.ignoreHeight:
+                self.scaledSpite = pygame.transform.scale(self.spriteOrigin,
                                                       (int(self.scaler + self.height), int(self.scaler + self.height)))
             self.sprite = self.scaledSpite
             self.moveTowardTarget()
-        self.rect = self.scaledSpite.get_rect()
+        if not self.ignoreHeight:
+            self.rect = self.sprite.get_rect()
 
         if self.fuse <= 0:
-            Global.player.bombPresent = False
+            self.source.bombPresent = False
             newExpl = Explosion(self.xpos+self.rect.center[0], self.ypos+self.rect.center[1], self.explosionScale)
             ObjectLists.listOfBombs.remove(self)
             ObjectLists.listAllObjects.remove(self)
