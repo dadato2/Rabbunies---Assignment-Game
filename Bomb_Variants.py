@@ -17,6 +17,7 @@ class Dynamite(Bomb):
         self.spriteOrigin = dynamiteSprite
         self.scaledSpite = self.spriteOrigin
         self.sprite = self.spriteOrigin
+        self.rect = self.sprite.get_rect()
 
 
 class Round(Bomb):
@@ -28,6 +29,7 @@ class Round(Bomb):
         self.spriteOrigin = bombSprite
         self.scaledSpite = self.spriteOrigin
         self.sprite = self.spriteOrigin
+        self.rect = self.sprite.get_rect()
 
 
 class Grenade(Bomb):
@@ -39,6 +41,7 @@ class Grenade(Bomb):
         self.spriteOrigin = grenadeSprite
         self.scaledSpite = self.spriteOrigin
         self.sprite = self.spriteOrigin
+        self.rect = self.sprite.get_rect()
 
 
 class Carrot(Bomb):
@@ -50,6 +53,7 @@ class Carrot(Bomb):
         self.spriteOrigin = carrotSprite
         self.scaledSpite = self.spriteOrigin
         self.sprite = self.spriteOrigin
+        self.rect = self.sprite.get_rect()
 
 
 class Cube(Bomb):
@@ -63,6 +67,7 @@ class Cube(Bomb):
         self.spriteIndexDelay = 0.1
         self.sprite = self.spriteImages[0]
         self.ignoreHeight = True
+        self.rect = self.sprite.get_rect()
 
     def animate(self):
         self.spriteIndexCounter += Time.deltaTime
@@ -75,7 +80,6 @@ class Cube(Bomb):
         self.animate()
         super().update()
         self.sprite = self.spriteImages[self.spriteIndex]
-        self.rect = self.sprite.get_rect()
 
 
 class Head(Bomb):
@@ -87,4 +91,5 @@ class Head(Bomb):
         self.spriteOrigin = headSprite
         self.scaledSpite = self.spriteOrigin
         self.sprite = self.spriteOrigin
+        self.rect = self.sprite.get_rect()
 

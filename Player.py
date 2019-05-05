@@ -9,48 +9,41 @@ running_animation = makeSprite("assets/rabber_running.png", 6).images
 for i in range(0, 6):
     running_animation[i] = pygame.transform.scale(running_animation[i], (54, 78))
 
-newBomb = None
+
 
 class Player (Object):
     def __init__(self):
 
         Global.player = self
+
+        self.Health = 3
+        self.speed = 6
+
         # sprite handlings
         self.anim_idle = idle_animation
         self.anim_run = running_animation
         self.animIndex = 0
-        self.animDelay = 0.2
+        self.animDelay = random.randrange(16, 24) * 0.01
         self.animTimer = 0
         self.isFacingLeft = False
+        self.invincible = 0
+        self.invincibleTime = 2  # seconds
+        self.newBomb = None
 
         self.sprite = self.anim_idle[self.animIndex]
-        # self.rect = self.spriteHead.get_rect()
+        self.rect = self.sprite.get_rect()
         # self.Sound_tear_1 = Global.Sounds.player_tear_1
 
         self.ypos = 300
         self.xpos = 300
-
-        self.squareSize = 66
-        self.rect = self.sprite.get_rect()
-        self.xy = (self.xpos - self.rect.center[0] + Constants.scr_shake_offset_x,
-                   self.ypos - self.rect.center[1] + Constants.scr_shake_offset_y)
-        self.order = self.ypos + self.squareSize
-        self.speed = 6
+        self.order = self.ypos + self.rect.h
         self.decel = self.speed / 1.5
         self.accel = self.speed / 1.5
         self.xAcc = 0.0
         self.yAcc = 0.0
-        self.running = False
         self.tempxAcc = 0.0
         self.tempyAcc = 0.0
-
-        self.strength = 0
-        self.maxStrength = 100
-
-        self.bombDelay = 2
-        self.bombDelayCounter = 0
-
-        self.accuracyOffset = 5
+        self.running = False
 
         self.bombPresent = False
 
@@ -64,6 +57,14 @@ class Player (Object):
         self.shooting()
         # set sprite
         self.animate()
+
+        # collisions
+        if self.invincible <= 0:
+            for explosion in ObjectLists.listOfExplosions:
+                if self.rect.colliderect(explosion.rect) and explosion.spriteIndex < 2:
+                    self.Health -= 1
+                    self.invincible = self.invincibleTime
+
 
     def animate(self):
         if self.xAcc < 0:
@@ -95,9 +96,13 @@ class Player (Object):
                 self.sprite = self.anim_run[self.animIndex]
             else:
                 self.sprite = pygame.transform.flip(self.anim_run[self.animIndex], True, False)
+        if self.invincible > 0:
+            self.invincible -= Time.deltaTime
+            if math.sin(self.invincible*50) >= 0:
+                self.sprite = self.sprite.copy()
+                self.sprite.fill((255, 255, 255), special_flags=pygame.BLEND_ADD)
 
     def walk(self):    # pressing movement keys WASD increases/decreases acceleration
-
         if self.pKey[K_d]:  # right
             if self.xAcc < 0:
                 self.xAcc = 0
@@ -161,29 +166,21 @@ class Player (Object):
         # reset direction animation:
 
     def shooting(self):
-        global newBomb
         self.isCharging = pygame.mouse.get_pressed()[0]
 
         if not self.bombPresent and self.isCharging:
             i = random.randrange(0, 6)
             if i == 0:
-                newBomb = Dynamite(self)
+                self.newBomb = Dynamite(self)
             elif i == 1:
-                newBomb = Round(self)
+                self.newBomb = Round(self)
             elif i == 2:
-                newBomb = Grenade(self)
+                self.newBomb = Grenade(self)
             elif i == 3:
-                newBomb = Carrot(self)
+                self.newBomb = Carrot(self)
             elif i == 4:
-                newBomb = Cube(self)
+                self.newBomb = Cube(self)
             else:
-                newBomb = Head(self)
+                self.newBomb = Head(self)
             self.bombPresent = True
 
-        if self.bombDelayCounter <= self.bombDelay and self.isCharging and self.bombPresent:    # manage delay between bombs, if you shoot a bomb, the counter resets and regains value over time
-            self.bombDelayCounter += Time.deltaTime
-
-        if not self.isCharging and self.bombDelayCounter > 0 and self.bombPresent:
-            if newBomb != None:
-                newBomb
-            self.bombDelayCounter = 0

@@ -6,11 +6,29 @@ class globalMath:
     def __init__(self):
         self.temp = 0
 
+    def Angle_noobj(self, originObject, x, y):
+        return math.atan2((originObject.ypos - y),
+                          (x - originObject.xpos)) + math.pi / 2
+
     def Angle(self, originObject, targetObject):
-        return math.atan2((originObject.ypos - targetObject.ypos), (targetObject.xpos - originObject.xpos)) + math.pi / 2
+        return math.atan2((originObject.ypos - targetObject.ypos),
+                          (targetObject.xpos - originObject.xpos)) + math.pi / 2
 
     def AnglePlayer(self, origin):
-        return math.atan2((origin.ypos - Global.player.ypos), (Global.player.xpos - origin.xpos)) + math.pi/2
+        return math.atan2((origin.ypos - Global.player.ypos),
+                          (Global.player.xpos - origin.xpos)) + math.pi/2
+
+    def DistFromPlayer(self, origin):
+        return math.sqrt((origin.xpos-Global.player.xpos)*(origin.xpos-Global.player.xpos) +
+                                        (origin.ypos-Global.player.ypos)*(origin.ypos-Global.player.ypos))
+
+    def Dist(self, origin, target):
+        return math.sqrt((origin.xpos-target.xpos)*(origin.xpos-target.xpos) +
+                                        (origin.ypos-target.ypos)*(origin.ypos-target.ypos))
+
+    def Dist_noObj(self, origin, targetX, targetY):
+        return math.sqrt((origin.xpos-targetX)*(origin.xpos-targetX) +
+                                        (origin.ypos-targetY)*(origin.ypos-targetY))
 
 
 GlobalMath = globalMath()
@@ -20,6 +38,7 @@ class Global:
     Sounds = None
     Crosshair = None
     scr = None
+    Debug = False
     SelectedBomb = 0
 
 
@@ -44,6 +63,7 @@ class Constants:
 class ObjectLists:
     listAllObjects = []
     listOfBombs = []
+    listOfExplosions = []
     listOfEnemies = []
 
 class Time:

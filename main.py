@@ -3,12 +3,12 @@ from ExtClasses import *
 from Debug import *
 from Crosshair import *
 from Player import *
+from Enemy_Variants import *
 from Bomb import *
 from ScreenControl import ScreenController
 
 lastTime = 0
 nowTime = 0
-
 
 pygame.init()
 pygame.mixer.init()
@@ -24,9 +24,11 @@ Global.scr = scr
 
 player = Player()
 ObjectLists.listAllObjects.append(player)
+enemy = Bun1()
+enemy = Bun2()
+enemy = Bun3()
 crosshair = Crosshair()
 ObjectLists.listAllObjects.append(crosshair)
-
 
 
 while True:                 # M A I N   L O O P
@@ -45,6 +47,11 @@ while True:                 # M A I N   L O O P
         sys.exit()
     if pKey[K_SPACE]:
         scr.shakeScreen(5, 1)
+
+    if player.Health <= 0:
+        Debug.Log("Game Over")
+    else:
+        Debug.Log("Lives : " + str(player.Health))
 
     ObjectLists.listAllObjects.sort(key=operator.attrgetter('order'))
     screen.fill(Colors.cyan)

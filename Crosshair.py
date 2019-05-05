@@ -13,8 +13,7 @@ class Crosshair (Object):
         self.distFromPLayer = 0
 
     def update(self):
-        self.distFromPLayer = math.sqrt((self.xpos-Global.player.xpos)*(self.xpos-Global.player.xpos) +
-                                        (self.ypos-Global.player.ypos)*(self.ypos-Global.player.ypos))
+        self.distFromPLayer = GlobalMath.DistFromPlayer(self)
 
         self.mKey = pygame.mouse.get_pressed()
         if self.mKey[0]:

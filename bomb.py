@@ -7,8 +7,8 @@ class Bomb(Object):
     def __init__(self, src):
         ObjectLists.listAllObjects.append(self)
         ObjectLists.listOfBombs.append(self)
-        self.xpos = Global.player.xpos
-        self.ypos = Global.player.ypos
+        self.xpos = src.xpos
+        self.ypos = src.ypos
         self.xy = (self.xpos, self.ypos)
         self.order = self.ypos
         self.height = 0
@@ -63,12 +63,11 @@ class Bomb(Object):
                                                       (int(self.scaler + self.height), int(self.scaler + self.height)))
             self.sprite = self.scaledSpite
             self.moveTowardTarget()
-        if not self.ignoreHeight:
-            self.rect = self.sprite.get_rect()
 
         if self.fuse <= 0:
             self.source.bombPresent = False
-            newExpl = Explosion(self.xpos+self.rect.center[0], self.ypos+self.rect.center[1], self.explosionScale)
+            newExpl = Explosion(self.xpos+int(self.rect.w/2), self.ypos+int(self.rect.h/2), self.explosionScale)
             ObjectLists.listOfBombs.remove(self)
             ObjectLists.listAllObjects.remove(self)
             del self
+            return

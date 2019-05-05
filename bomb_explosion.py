@@ -5,7 +5,9 @@ explosionSprite = makeSprite("assets/explosion.png", 12).images
 class Explosion (Object):
     def __init__(self, xpos, ypos, scale):
         self.xpos, self.ypos = xpos, ypos
+        self.order = Constants.scr_height
         ObjectLists.listAllObjects.append(self)
+        ObjectLists.listOfExplosions.append(self)
         self.spriteImages = explosionSprite
         self.scale = scale
         self.scaleImages()
@@ -30,5 +32,11 @@ class Explosion (Object):
 
         self.sprite = self.spriteImages[self.spriteIndex]
         if self.spriteIndex >= 11:
+            ObjectLists.listOfExplosions.remove(self)
             ObjectLists.listAllObjects.remove(self)
             del self
+            return
+
+    def draw(self, screen):
+        super().draw(screen)
+        self.order = Constants.scr_height
