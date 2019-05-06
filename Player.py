@@ -17,7 +17,11 @@ class Player (Object):
         Global.player = self
 
         self.Health = 3
+        self.maxHealth = 5
         self.speed = 6
+
+        # how many bombs does the player have, -1 = infinity
+        self.bombInventory = [-1, 5, 3, 2, 1, 0]
 
         # sprite handlings
         self.anim_idle = idle_animation
@@ -34,6 +38,7 @@ class Player (Object):
         self.rect = self.sprite.get_rect()
         # self.Sound_tear_1 = Global.Sounds.player_tear_1
 
+        #positional and movement
         self.ypos = 300
         self.xpos = 300
         self.order = self.ypos + self.rect.h
@@ -44,10 +49,10 @@ class Player (Object):
         self.tempxAcc = 0.0
         self.tempyAcc = 0.0
         self.running = False
-
+        # can only thow one bomb at a time
         self.bombPresent = False
 
-        self.pKey = pygame.key.get_pressed()
+        self.pKey = None
 
     def update(self):
         self.pKey = pygame.key.get_pressed()
@@ -167,20 +172,22 @@ class Player (Object):
 
     def shooting(self):
         self.isCharging = pygame.mouse.get_pressed()[0]
-
+        # checks which bomb is selected and spawns a bomb depending on that
         if not self.bombPresent and self.isCharging:
-            i = random.randrange(0, 6)
-            if i == 0:
+            if Global.SelectedBomb == 0 and (self.bombInventory[0] > 0 or self.bombInventory[0] < 0):
                 self.newBomb = Dynamite(self)
-            elif i == 1:
+            elif Global.SelectedBomb == 1 and (self.bombInventory[1] > 0 or self.bombInventory[1] < 0):
                 self.newBomb = Round(self)
-            elif i == 2:
+            elif Global.SelectedBomb == 2 and (self.bombInventory[2] > 0 or self.bombInventory[2] < 0):
                 self.newBomb = Grenade(self)
-            elif i == 3:
+            elif Global.SelectedBomb == 3 and (self.bombInventory[3] > 0 or self.bombInventory[3] < 0):
                 self.newBomb = Carrot(self)
-            elif i == 4:
+            elif Global.SelectedBomb == 4 and (self.bombInventory[4] > 0 or self.bombInventory[4] < 0):
                 self.newBomb = Cube(self)
-            else:
+            elif Global.SelectedBomb == 5 and (self.bombInventory[5] > 0 or self.bombInventory[5] < 0):
                 self.newBomb = Head(self)
+
+            if self.bombInventory[Global.SelectedBomb] > 0:
+                self.bombInventory[Global.SelectedBomb] -= 1
             self.bombPresent = True
 

@@ -12,6 +12,7 @@ class Crosshair (Object):
         self.rect = self.sprite.get_rect()
         self.distFromPLayer = 0
 
+
     def update(self):
         self.distFromPLayer = GlobalMath.DistFromPlayer(self)
 
@@ -39,6 +40,7 @@ class Crosshair (Object):
         self.rect = self.sprite.get_rect()
 
         self.xpos, self.ypos = pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]
+
 
     def draw(self, screen):
         self.xy = (pygame.mouse.get_pos()[0] - self.rect.center[0], pygame.mouse.get_pos()[1] - self.rect.center[1])

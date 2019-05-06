@@ -1,5 +1,7 @@
 from Enemy import *
 
+# This file contains the classes for the different enemy types, each one having different speed, health, etc.
+
 idle_animation_bun1 = makeSprite("assets/bun1_idle.png", 4).images
 for i in range(0, 4):
     idle_animation_bun1[i] = pygame.transform.scale(idle_animation_bun1[i], (54, 78))
@@ -28,11 +30,11 @@ for i in range(0, 6):
 class Bun1(Enemy):
     def __init__(self):
         super().__init__()
-        self.selfType = 0
+        self.selfType = 0 # used for enemy waves during gameplay
         self.Health = 2
         self.speed = 1
-        self.accuracyOffset = 5
-        self.bomb_type = "dynamite"
+        self.accuracyOffset = 5  # currently not used
+        self.bomb_type = "dynamite"   # what weapon does the enemy throw
         self.bombDelayAdderMin, self.bombDelayAdderMax = 0, 3
 
         self.anim_idle = idle_animation_bun1

@@ -3,14 +3,14 @@ from Bomb_Variants import Dynamite, Round
 
 class Enemy(Object):
     def __init__(self):
-        ObjectLists.listAllObjects.append(self)
+        ObjectLists.listAllObjects.append(self) # appends itself to the global objects list
         ObjectLists.listOfEnemies.append(self)
         # values to be changed by child class
-        self.Health = 3
+        self.Health = 3  # hitpoints
         self.speed = 6
-        self.accuracyOffset = 5
-        self.bomb_type = "dynamite"
-        self.bombDelayAdderMin, self.bombDelayAdderMax = 0, 0
+        self.accuracyOffset = 5   # not used
+        self.bomb_type = "dynamite"    # what type of bomb does the enemy throw
+        self.bombDelayAdderMin, self.bombDelayAdderMax = 0, 0  # delay between throws, used to make enemies harder/easier
 
         # sprite handlings
         self.anim_idle = None
@@ -24,7 +24,7 @@ class Enemy(Object):
         # draw
         self.sprite = None
         self.rect = None
-        self.xpos = random.randrange(-300, Constants.scr_width +300)
+        self.xpos = random.randrange(-300, Constants.scr_width +300)   # this code spawns the enemy off the screen
         if 0 < self.xpos < Constants.scr_width:
             if random.getrandbits:
                 self.ypos = random.randrange(-300, -100)
@@ -34,14 +34,12 @@ class Enemy(Object):
             self.ypos = random.randrange(-300, Constants.scr_height + 300)
 
         self.order = self.ypos
-        self.invincible = 0
+        self.invincible = 0 # how long enemy is invincible after hit
         self.invincibleTime = 2  # seconds
         # movement and position
-        self.targetDest = (random.randrange(0, Constants.scr_width),
+        self.targetDest = (random.randrange(0, Constants.scr_width),  # takes a point on the screen and moves toward it
                            random.randrange(0, Constants.scr_height))
-        self.decel = self.speed / 1.5
-        self.accel = self.speed / 1.5
-        self.xAcc = 0.0
+        self.xAcc = 0.0  # used for
         self.yAcc = 0.0
         self.direction = None
         self.bombPresent = False

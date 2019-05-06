@@ -31,6 +31,7 @@ class globalMath:
                                         (origin.ypos-targetY)*(origin.ypos-targetY))
 
 
+
 GlobalMath = globalMath()
 
 class Global:
@@ -40,6 +41,7 @@ class Global:
     scr = None
     Debug = False
     wave = 0
+    score = 0
     SelectedBomb = 0
 
 
@@ -66,7 +68,7 @@ class ObjectLists:
     listOfBombs = []
     listOfExplosions = []
     listOfEnemies = []
-    listUI =[]
+    listUI = []
 
 class Time:
     deltaTime = 0.0
@@ -93,14 +95,6 @@ class directions(Enum):
     Down = 1
     Left = 2
     Right = 3
-
-class bombVariant():
-    round = 0
-    dynamite = 1
-    grenade = 2
-    radio_carrot = 3
-    cube_3d = 4
-    head = 5
 
 '''class sounds:
     def __init__(self):

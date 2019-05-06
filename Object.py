@@ -5,7 +5,7 @@ from ExtClasses import *
 from pygame_logic import makeSprite, newSprite
 
 
-class Object: # Main object class, every game object is child of class
+class Object: # Main game object class, every game object is child of class
     def __init__(self):
         self.xpos = None
         self.ypos = None
