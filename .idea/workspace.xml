@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f714a91-af63-4410-9d19-46eda4ade08a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Bomb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bomb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bomb_Variants.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bomb_Variants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crosshair.py" beforeDir="false" afterPath="$PROJECT_DIR$/Crosshair.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Debug.py" beforeDir="false" afterPath="$PROJECT_DIR$/Debug.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExtClasses.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExtClasses.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Object.py" beforeDir="false" afterPath="$PROJECT_DIR$/Object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pickup.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pickup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projectile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScreenControl.py" beforeDir="false" afterPath="$PROJECT_DIR$/ScreenControl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI_Elements.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI_Elements.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI_Object.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI_Object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bomb_explosion.py" beforeDir="false" afterPath="$PROJECT_DIR$/bomb_explosion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pygame_logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/pygame_logic.py" afterDir="false" />
-    </list>
+    <list default="true" id="6f714a91-af63-4410-9d19-46eda4ade08a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +79,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Player.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-2300">
@@ -108,23 +91,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pygame_logic.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1334">
-              <caret line="58" selection-start-line="58" selection-end-line="58" />
+            <state relative-caret-position="253">
+              <caret line="11" column="45" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Enemy.py">
+        <entry file="file://$PROJECT_DIR$/pygame_logic.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="710">
-              <caret line="154" column="105" selection-start-line="154" selection-start-column="105" selection-end-line="154" selection-end-column="105" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1334">
+              <caret line="58" selection-start-line="58" selection-end-line="58" />
             </state>
           </provider>
         </entry>
@@ -186,6 +166,7 @@
         <option value="$PROJECT_DIR$/Object.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Player.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
       </list>
     </option>
   </component>
@@ -293,7 +274,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2857143" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2857143" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -500,6 +481,13 @@
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="45" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
         </state>
       </provider>
     </entry>
