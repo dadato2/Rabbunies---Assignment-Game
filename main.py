@@ -99,7 +99,7 @@ while gameLoop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:    # this handles bomb selection during gameplay
                 if event.button == 4 and waitForBombSwitch >= bombSwitchDelay:
                     Global.SelectedBomb = (Global.SelectedBomb - 1) % 6
                     while player.bombInventory[Global.SelectedBomb] == 0:
@@ -116,7 +116,7 @@ while gameLoop:
         if pKey[K_ESCAPE]:
             sys.exit()
         # if player dies transition to GAME OVER screen
-        if player.Health <= 0:
+        if player.Health <= 0 and not Global.Debug:
             transition(Colors.black)
             break
         # sort objects based on their Y position
@@ -156,6 +156,7 @@ while gameLoop:
     ObjectLists.listUI = []
     ObjectLists.listOfExplosions = []
     ObjectLists.listOfBombs = []
+    ObjectLists.listPickups = []
     Constants.scr_shake_offset_y = 0
     Constants.scr_shake_offset_x = 0
     scr.shakeAmmount = 0

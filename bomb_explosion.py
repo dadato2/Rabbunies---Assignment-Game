@@ -15,7 +15,8 @@ class Explosion (Object):
         self.spriteDelay = 0.1
         self.spriteTimer = 0
         self.sprite = self.spriteImages[0]
-        self.rect = self.sprite.get_rect()
+        self.rect = pygame.Rect(self.xpos - self.sprite.get_rect().w / 2, self.ypos - self.sprite.get_rect().h / 2,
+                                self.sprite.get_rect().w, self.sprite.get_rect().h)
         Global.scr.shakeScreen(scale*.05, scale*0.002)
 
     def scaleImages(self):

@@ -54,8 +54,8 @@ for imageIndex in range(0, len(bombImages)):
 
 class UI_SelectedBomb(UI_Object):
     def __init__(self):
-        self.xpos = Constants.scr_width - 100
-        self.ypos = 10
+        self.xpos = Constants.scr_width - 120
+        self.ypos = 15
         self.font = pygame.font.Font('assets/arcade.ttf', 40)
         self.message = "0"
         self.images = bombImages
@@ -67,5 +67,5 @@ class UI_SelectedBomb(UI_Object):
             self.message = "oo"
         else:
             self.message = str(Global.player.bombInventory[Global.SelectedBomb])
-        screen.blit(self.font.render(self.message, False, (0, 0, 0)), (self.xpos + bombX + 10, self.ypos))
+        screen.blit(self.font.render(self.message, False, (0, 0, 0)), (self.xpos + bombX + 10, self.ypos + 5))
 

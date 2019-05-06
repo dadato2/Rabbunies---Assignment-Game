@@ -39,11 +39,10 @@ class Global:
     Sounds = None
     Crosshair = None
     scr = None
-    Debug = False
     wave = 0
     score = 0
     SelectedBomb = 0
-
+    Debug = False
 
 class Constants:
     scr_width = 1080
@@ -68,6 +67,7 @@ class ObjectLists:
     listOfBombs = []
     listOfExplosions = []
     listOfEnemies = []
+    listPickups = []
     listUI = []
 
 class Time:

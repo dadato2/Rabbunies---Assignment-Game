@@ -1,5 +1,6 @@
 from Object import *
 from Bomb_Variants import Dynamite, Round
+from Pickup import Pickup
 
 class Enemy(Object):
     def __init__(self):
@@ -52,9 +53,12 @@ class Enemy(Object):
         self.bombDelayCounter = random.randrange(500, 800) * 0.01
 
     def update(self):
+        # Death
         if self.Health <= 0:
             ObjectLists.listOfEnemies.remove(self)
             ObjectLists.listAllObjects.remove(self)
+            if random.randrange(0, 100) > 15:
+                Pickup(self)
             return
 
         # walking:

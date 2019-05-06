@@ -56,20 +56,41 @@ class Player (Object):
 
     def update(self):
         self.pKey = pygame.key.get_pressed()
+        if self.Health < 0:
+            self.Health = 0
         # walking:
         self.walk()
+        # collisions
+        self.collisions()
         # shooting:
         self.shooting()
         # set sprite
         self.animate()
 
-        # collisions
+    def collisions(self):
         if self.invincible <= 0:
             for explosion in ObjectLists.listOfExplosions:
                 if self.rect.colliderect(explosion.rect) and explosion.spriteIndex < 2:
                     self.Health -= 1
                     self.invincible = self.invincibleTime
-
+        for pickup in ObjectLists.listPickups:
+            if self.rect.colliderect(pickup.rect):
+                if pickup.type == "health" and self.Health < self.maxHealth:
+                    self.Health += 1
+                elif pickup.type == "dynamite":
+                    self.bombInventory[0] += random.randrange(3, 5)
+                elif pickup.type == "round":
+                    self.bombInventory[1] += random.randrange(2, 5)
+                elif pickup.type == "grenade":
+                    self.bombInventory[2] += random.randrange(2, 4)
+                elif pickup.type == "carrot":
+                    self.bombInventory[3] += random.randrange(1, 3)
+                elif pickup.type == "cube":
+                    self.bombInventory[4] += random.randrange(1, 2)
+                elif pickup.type == "head":
+                    self.bombInventory[5] += 1
+                ObjectLists.listAllObjects.remove(pickup)
+                ObjectLists.listPickups.remove(pickup)
 
     def animate(self):
         if self.xAcc < 0:
@@ -189,5 +210,7 @@ class Player (Object):
 
             if self.bombInventory[Global.SelectedBomb] > 0:
                 self.bombInventory[Global.SelectedBomb] -= 1
+            while self.bombInventory[Global.SelectedBomb] == 0:
+                Global.SelectedBomb = (Global.SelectedBomb - 1) % 6
             self.bombPresent = True
 
