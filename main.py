@@ -5,6 +5,7 @@ from Crosshair import *
 from Player import *
 from Enemy_Variants import *
 from Bomb import *
+from UI_Health import UI_Health
 from ScreenControl import ScreenController
 
 pygame.init()
@@ -23,6 +24,8 @@ player = Player()
 ObjectLists.listAllObjects.append(player)
 crosshair = Crosshair()
 ObjectLists.listAllObjects.append(crosshair)
+healthUI = UI_Health()
+ObjectLists.listUI.append(healthUI)
 
 while True:     # T I T L E   S C R E E N
     time.tick(Constants.fps)
@@ -55,8 +58,8 @@ while True:                 # M A I N   L O O P
 
     if player.Health <= 0:
         Debug.Log("Game Over")
-    else:
-        Debug.Log("Lives : " + str(player.Health))
+    # else:
+        # Debug.Log("Lives : " + str(player.Health))
 
     ObjectLists.listAllObjects.sort(key=operator.attrgetter('order'))
     screen.fill(Colors.cyan)
@@ -64,6 +67,9 @@ while True:                 # M A I N   L O O P
     for gameObject in ObjectLists.listAllObjects:
         gameObject.update()
         gameObject.draw(screen)
+    for ui_object in ObjectLists.listUI:
+        ui_object.update()
+        ui_object.draw(screen)
 
     if len(ObjectLists.listOfEnemies) <= 0:
         for times in range(0, random.randrange(1, 4)):

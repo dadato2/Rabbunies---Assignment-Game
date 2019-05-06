@@ -53,7 +53,7 @@ class Constants:
     caption = "Rabbunnies: The element of explode!"
     iconImage = "icon.png"
 
-    debugMessage = "Hello"
+    debugMessage = ""
 
     playerWidth = 56
     playerHeight = 66
@@ -65,6 +65,7 @@ class ObjectLists:
     listOfBombs = []
     listOfExplosions = []
     listOfEnemies = []
+    listUI =[]
 
 class Time:
     deltaTime = 0.0
