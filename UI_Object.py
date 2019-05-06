@@ -1,4 +1,5 @@
 from ExtClasses import *
+from pygame_logic import makeSprite, newSprite
 
 class UI_Object():
     def __init__(self):

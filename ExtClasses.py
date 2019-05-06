@@ -39,6 +39,7 @@ class Global:
     Crosshair = None
     scr = None
     Debug = False
+    wave = 0
     SelectedBomb = 0
 
 
@@ -84,6 +85,8 @@ class Colors:
     gray_light = 175, 175, 175
     gray_dark = 75, 75, 75
     gray_very_dark = 50, 50, 50
+    pleasant_red = 223, 117, 153
+    pleasant_blue = 114, 214, 201
 
 class directions(Enum):
     Up = 0

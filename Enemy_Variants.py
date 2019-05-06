@@ -28,6 +28,7 @@ for i in range(0, 6):
 class Bun1(Enemy):
     def __init__(self):
         super().__init__()
+        self.selfType = 0
         self.Health = 2
         self.speed = 1
         self.accuracyOffset = 5
@@ -43,6 +44,7 @@ class Bun1(Enemy):
 class Bun2(Enemy):
     def __init__(self):
         super().__init__()
+        self.selfType = 1
         self.Health = 2
         self.speed = 2
         self.accuracyOffset = 2
@@ -58,6 +60,7 @@ class Bun2(Enemy):
 class Bun3(Enemy):
     def __init__(self):
         super().__init__()
+        self.selfType = 2
         self.Health = 3
         self.speed = 3
         self.accuracyOffset = 0
