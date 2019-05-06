@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f714a91-af63-4410-9d19-46eda4ade08a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExtClasses.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExtClasses.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pickup.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pickup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="267" column="127" selection-start-line="267" selection-start-column="127" selection-end-line="267" selection-end-column="127" />
+            <state relative-caret-position="250">
+              <caret line="245" column="82" selection-start-line="245" selection-start-column="82" selection-end-line="245" selection-end-column="82" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -476,8 +472,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="267" column="127" selection-start-line="267" selection-start-column="127" selection-end-line="267" selection-end-column="127" />
+        <state relative-caret-position="250">
+          <caret line="245" column="82" selection-start-line="245" selection-start-column="82" selection-end-line="245" selection-end-column="82" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

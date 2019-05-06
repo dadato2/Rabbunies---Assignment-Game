@@ -239,7 +239,11 @@ while gameLoop:
         if len(ObjectLists.listOfEnemies) <= 0 and waitAMinute <= 0:
             waitAMinute = random.randrange(2, 4)
             Global.wave += 1
-            for times in range(0, random.randrange(0, int(Global.wave/2)+1)):
+            waveMinEnemies = int(Global.wave/3)+1
+            waveMaxEnemies = int(Global.wave/2)+1
+            if waveMinEnemies == waveMaxEnemies:
+                waveMaxEnemies += 1
+            for times in range(0, random.randrange(waveMinEnemies, waveMaxEnemies)):
                 idd = random.randrange(Global.wave)
                 if 0 <= idd < 3:
                     enemy = Bun1()
