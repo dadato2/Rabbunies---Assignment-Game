@@ -12,6 +12,7 @@ class Enemy(Object):
         self.accuracyOffset = 5   # not used
         self.bomb_type = "dynamite"    # what type of bomb does the enemy throw
         self.bombDelayAdderMin, self.bombDelayAdderMax = 0, 0  # delay between throws, used to make enemies harder/easier
+        self.selfType = 0   # which enemy it is (used for score)
 
         # sprite handlings
         self.anim_idle = None
@@ -55,6 +56,7 @@ class Enemy(Object):
     def update(self):
         # Death
         if self.Health <= 0:
+            Global.score += self.selfType+1
             ObjectLists.listOfEnemies.remove(self)
             ObjectLists.listAllObjects.remove(self)
             if random.randrange(0, 100) > 15:

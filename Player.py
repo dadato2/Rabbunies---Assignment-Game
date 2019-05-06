@@ -1,5 +1,6 @@
 from Object import *
 from Bomb_Variants import *
+from Pickup import Pickup
 
 idle_animation = makeSprite("assets/rabber_idle.png", 4).images
 for i in range(0, 4):
@@ -21,7 +22,7 @@ class Player (Object):
         self.speed = 6
 
         # how many bombs does the player have, -1 = infinity
-        self.bombInventory = [-1, 5, 3, 2, 1, 0]
+        self.bombInventory = [-1, 0, 0, 0, 0, 0]
 
         # sprite handlings
         self.anim_idle = idle_animation
@@ -73,22 +74,42 @@ class Player (Object):
                 if self.rect.colliderect(explosion.rect) and explosion.spriteIndex < 2:
                     self.Health -= 1
                     self.invincible = self.invincibleTime
-        for pickup in ObjectLists.listPickups:
+        # Debug testing of pickups
+        if Global.Debug:
+            if pygame.key.get_pressed()[K_m]:
+                Pickup(self)
+        for pickup in ObjectLists.listPickups:      # check collisions with Pickups
             if self.rect.colliderect(pickup.rect):
                 if pickup.type == "health" and self.Health < self.maxHealth:
                     self.Health += 1
                 elif pickup.type == "dynamite":
                     self.bombInventory[0] += random.randrange(3, 5)
+
                 elif pickup.type == "round":
                     self.bombInventory[1] += random.randrange(2, 5)
+                    if Global.collected_bombs[0] == 0:        # This controls when the infograpth for the item should show up
+                        Global.collected_bombs[0] = 1
+
                 elif pickup.type == "grenade":
                     self.bombInventory[2] += random.randrange(2, 4)
+                    if Global.collected_bombs[1] == 0:
+                        Global.collected_bombs[1] = 1
+
                 elif pickup.type == "carrot":
                     self.bombInventory[3] += random.randrange(1, 3)
+                    if Global.collected_bombs[2] == 0:
+                        Global.collected_bombs[2] = 1
+
                 elif pickup.type == "cube":
                     self.bombInventory[4] += random.randrange(1, 2)
+                    if Global.collected_bombs[3] == 0:
+                        Global.collected_bombs[3] = 1
+
                 elif pickup.type == "head":
                     self.bombInventory[5] += 1
+                    if Global.collected_bombs[4] == 0:
+                        Global.collected_bombs[4] = 1
+
                 ObjectLists.listAllObjects.remove(pickup)
                 ObjectLists.listPickups.remove(pickup)
 

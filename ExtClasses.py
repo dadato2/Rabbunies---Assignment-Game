@@ -42,6 +42,7 @@ class Global:
     wave = 0
     score = 0
     SelectedBomb = 0
+    collected_bombs = [0, 0, 0, 0, 0]
     Debug = False
 
 class Constants:
@@ -89,6 +90,7 @@ class Colors:
     gray_very_dark = 50, 50, 50
     pleasant_red = 223, 117, 153
     pleasant_blue = 114, 214, 201
+    pleasant_white = 255, 252, 241
 
 class directions(Enum):
     Up = 0

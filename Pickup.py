@@ -16,9 +16,9 @@ class Pickup(Object):
         if random.getrandbits(1):
             self.type = self.typelist[0]
             self.sprite = eggSprites[random.randrange(0, len(eggSprites))]
-            self.sprite = pygame.transform.scale(self.sprite, (16, 16))
+            self.sprite = pygame.transform.scale(self.sprite, (32, 32))
         else:
-            self.chance = random.randrange(0, len(bombSprites))
+            self.chance = random.randrange(1, len(bombSprites))
             self.type = self.typelist[self.chance + 1]
             self.sprite = bombSprites[self.chance]
         self.rect = pygame.Rect(self.xpos - self.sprite.get_rect().w / 2, self.ypos - self.sprite.get_rect().h / 2,

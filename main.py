@@ -9,6 +9,7 @@ from UI_Elements import UI_Health, UI_Enemies, UI_SelectedBomb
 from ScreenControl import ScreenController
 
 pygame.init()
+pygame.mouse.set_visible(False)
 pygame.mixer.init()
 time = pygame.time.Clock()
 pygame.display.set_caption(Constants.caption)
@@ -21,6 +22,7 @@ Global.scr = scr
 # Global.Sounds = sounds()
 gameLoop = True
 
+font_arcade_26 = pygame.font.Font('assets/arcade.ttf', 26)
 font_arcade_40 = pygame.font.Font('assets/arcade.ttf', 40)
 font_arcade_120 = pygame.font.Font('assets/arcade.ttf', 120)
 
@@ -40,16 +42,101 @@ def transition(color):
         pygame.display.update()
 
 
+def showInfo(elem):
+    infoRect_x, infoRect_y = Constants.scr_width * 1/6, Constants.scr_height * 1/6
+    infoRect = pygame.Rect(infoRect_x, infoRect_y, Constants.scr_width * 5/6-infoRect_x,
+                           Constants.scr_height * 5/6-infoRect_y)
+    info_image_size = 96
+    info_image = None
+    info_images = None
+    info_images_index = 0
+    info_multiple_images = False
+    info_msg_name = ""
+    info_msg_1 = ""
+    info_msg_2 = ""
+    info_msg_3 = ""
+    info_msg_4 = ""
+    info_msg_goBack = "Press   Space   to   Continue"
+    if elem == 0:
+        info_image = pygame.image.load("assets/bomb.png")
+        info_image = pygame.transform.scale(info_image, (info_image_size, info_image_size))
+        info_msg_name = "Round   Bomb"
+        info_msg_1 = "A   normal  round  bomb!"
+        info_msg_2 = "The   Rabbits  have   watched   too   many"
+        info_msg_3 = "Cartoons   in   their   youth   and  "
+        info_msg_4 = " came   up   with   this!"
+    elif elem == 1:
+        info_image = pygame.image.load("assets/grenade.png")
+        info_image = pygame.transform.scale(info_image, (info_image_size, info_image_size))
+        info_msg_name = "Grenade"
+        info_msg_1 = "Yes   rabbits   play   video   games"
+        info_msg_2 = "That   is   how   they   came  up"
+        info_msg_3 = "with   this   bomb!"
+        info_msg_4 = "Quite   handy   if   you   ask   me!"
+    elif elem == 2:
+        info_image = pygame.image.load("assets/carrot.png")
+        info_image = pygame.transform.scale(info_image, (info_image_size, info_image_size))
+        info_msg_name = "Radioactive   Carrot"
+        info_msg_1 = "Someone   left   this   carrot   in"
+        info_msg_2 = "the   fridge   for   quite   a   long"
+        info_msg_3 = "time!   Now   it   is  not   only"
+        info_msg_4 = "stinky   but   also   explosive!"
+    elif elem == 3:
+        info_multiple_images = True
+        info_images = makeSprite("assets/3dCube.png", 48).images
+        for inin in range(0, len(info_images)):
+            info_images[inin] = pygame.transform.scale(info_images[inin], (info_image_size, info_image_size))
+        info_msg_name = "3D   Cube"
+        info_msg_1 = "An   object   from   another   dimention!"
+        info_msg_2 = "Rabbits   are   still   not   sure"
+        info_msg_3 = "how   it   moves   on   its   own"
+        info_msg_4 = "or   what   the   heck   it  is!"
+    elif elem == 4:
+        info_image = pygame.image.load("assets/head.png")
+        info_image = pygame.transform.scale(info_image, (info_image_size, info_image_size))
+        info_msg_name = "Head   Of  A   Fallen   Hero"
+        info_msg_1 = "During   funerals   rabbits"
+        info_msg_2 = "decapitate   their   fallen   brothers"
+        info_msg_3 = "and   stuff   their   heads  with"
+        info_msg_4 = "explosives!  Whoah!"
+    while True:
+        time.tick(Constants.fps)
+        pygame.draw.rect(screen, Colors.pleasant_white, infoRect)
+        pygame.draw.rect(screen, Colors.gray_very_dark, infoRect, 2)
+        if info_multiple_images:
+            screen.blit(info_images[info_images_index], (infoRect_x + 30, infoRect_y + 30))
+            info_images_index = (info_images_index + 1) % 48
+        else:
+            screen.blit(info_image, (infoRect_x + 30, infoRect_y + 30))
+        screen.blit(font_arcade_40.render(info_msg_name, False, (0, 0, 0)), (infoRect_x + 150, infoRect_y + 50))
+        screen.blit(font_arcade_40.render(info_msg_1, False, (0, 0, 0)), (infoRect_x + 30, infoRect_y + 170))
+        screen.blit(font_arcade_40.render(info_msg_2, False, (0, 0, 0)), (infoRect_x + 30, infoRect_y + 230))
+        screen.blit(font_arcade_40.render(info_msg_3, False, (0, 0, 0)), (infoRect_x + 30, infoRect_y + 290))
+        screen.blit(font_arcade_40.render(info_msg_4, False, (0, 0, 0)), (infoRect_x + 30, infoRect_y + 350))
+        screen.blit(font_arcade_26.render(info_msg_goBack, False, (0, 0, 0)), (infoRect_x + 210, infoRect_y + 450))
+
+        if pygame.key.get_pressed()[K_SPACE]:
+            break
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+        pygame.display.update()
+
+
 help_msg_1 = "Press   H   for   help!"
 help_msg_2 = ""
-while True:     # T I T L E   S C R E E N
+help_msg_3 = ""
+while True:                                                                      # T I T L E   S C R E E N
     time.tick(Constants.fps)
     screen.fill(Colors.pleasant_red)
-    screen.blit(font_arcade_120.render("Rabbunnies!", False, (255, 255, 255)), (160, 100))
+    screen.blit(font_arcade_120.render("Rabbunnies!", False, (255, 255, 255)), (170, 100))
     screen.blit(font_arcade_40.render("Press   Space   to   start!", False, (0, 0, 0)), (310, 400))
-    screen.blit(font_arcade_40.render(help_msg_1, False, (0, 0, 0)), (310, 500))
+    screen.blit(font_arcade_40.render(help_msg_1, False, (0, 0, 0)), (320, 500))
     if not help_msg_2 == "":
         screen.blit(font_arcade_40.render(help_msg_2, False, (0, 0, 0)), (120, 550))
+    if not help_msg_3 == "":
+        screen.blit(font_arcade_40.render(help_msg_3, False, (0, 0, 0)), (270, 600))
 
     if pygame.key.get_pressed()[K_SPACE]:
         transition(Colors.pleasant_blue)
@@ -57,12 +144,13 @@ while True:     # T I T L E   S C R E E N
     if pygame.key.get_pressed()[K_h]:
         help_msg_1 = "WASD  move    MOUSE   aim"
         help_msg_2 = "HOLD   CLICK   TO   CHARGE   BOMB    RELEASE    TO    THROW"
+        help_msg_3 = "SCROLL   WHEEL   SELECT BOMB"
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
     pygame.display.update()
 
-# M A I N   L O O P   I N I T I A L I Z E
+#                                                        M A I N   L O O P   I N I T I A L I Z E
 while gameLoop:
     # initialize and set main objects and UI objects
     player = Player()
@@ -87,8 +175,14 @@ while gameLoop:
     # variable to pause switching between bombs
     bombSwitchDelay = 0.2
     waitForBombSwitch = bombSwitchDelay
-
     while True:                 # M A I N   L O O P
+        # This makes the info for each new collected bomb
+        for indexForElem in range(0, len(Global.collected_bombs)):
+            if Global.collected_bombs[indexForElem] == 1:
+                Global.collected_bombs[indexForElem] = 2
+                showInfo(indexForElem)
+            indexForElem += 1
+
         nowTime = pygame.time.get_ticks()
         Time.deltaTime = (nowTime-lastTime) / 1000 % 1
         lastTime = nowTime
@@ -115,6 +209,11 @@ while gameLoop:
 
         if pKey[K_ESCAPE]:
             sys.exit()
+        # activate and deactivate debug mode
+        if pKey[K_o] and pKey[K_p] and pKey[K_i]:
+            Global.Debug = True
+        if pKey[K_j] and pKey[K_k] and [K_l]:
+            Global.Debug = False
         # if player dies transition to GAME OVER screen
         if player.Health <= 0 and not Global.Debug:
             transition(Colors.black)
@@ -166,6 +265,7 @@ while gameLoop:
         time.tick(Constants.fps)
         screen.fill(Colors.black)
         screen.blit(font_arcade_120.render("Game Over!", False, (255, 255, 255)), (250, 200))
+        screen.blit(font_arcade_40.render("Score " + str(Global.score), False, (255, 255, 255)), (500-len(str(Global.score))*10, 400))
         screen.blit(font_arcade_40.render("Press   Space   to   restart!", False, (255, 255, 255)), (310, 500))
 
         if pygame.key.get_pressed()[K_SPACE]:
