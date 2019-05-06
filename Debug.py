@@ -1,13 +1,15 @@
 import pygame
 from ExtClasses import Constants
 
-class debug:
+
+class debug:   # used to show text on screen by typing Debug.Log()
     def __init__(self):
         pygame.font.init()
         self.debugFont = pygame.font.SysFont('Comic Sans MS', 40)
         self.debugtextsurface = self.debugFont.render(Constants.debugMessage, False, (0, 0, 0))
         self.arg = ""
         self.prevarg = ""
+
     def Log(self, argument):
         try:
             self.arg = str(argument)

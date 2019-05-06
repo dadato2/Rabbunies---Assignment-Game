@@ -68,7 +68,7 @@ class Player (Object):
         # set sprite
         self.animate()
 
-    def collisions(self):
+    def collisions(self):   # checks for collision with bomb explosions and pickups
         if self.invincible <= 0:
             for explosion in ObjectLists.listOfExplosions:
                 if self.rect.colliderect(explosion.rect) and explosion.spriteIndex < 2:
@@ -113,7 +113,8 @@ class Player (Object):
                 ObjectLists.listAllObjects.remove(pickup)
                 ObjectLists.listPickups.remove(pickup)
 
-    def animate(self):
+    def animate(self):  # handles animation - if player is still, play idle animation, if player is running
+                        # get player direction and flip image vertically if needed
         if self.xAcc < 0:
             self.isFacingLeft = False
         else:

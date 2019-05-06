@@ -48,7 +48,7 @@ class Enemy(Object):
         self.pKey = pygame.key.get_pressed()
         self.distFromPlayer = 100
         self.distFromTarget = 0
-        self.waitThere = 0
+        self.waitThere = 0 # time to wait at destination until getting another target destination
         # bomb throwing
         self.bombDelay = 5
         self.bombDelayCounter = random.randrange(500, 800) * 0.01
@@ -78,6 +78,9 @@ class Enemy(Object):
                     self.invincible = self.invincibleTime
 
     def animate(self):
+        # handles animation, if not moving, uses Idle sprites; if moving takes direction and
+        # if needed flips the sprites
+        # upon getting hit adds white tint to sprite that is flashing
         if self.xAcc < 0:
             self.isFacingLeft = False
         else:
@@ -117,6 +120,8 @@ class Enemy(Object):
                 self.sprite.fill((255, 255, 255), special_flags=pygame.BLEND_ADD)
 
     def walk(self):
+        # walks to set destination (x, y). when it reaches it, waits a random between (0, 2) seconds
+        # after that gets new destination and runs there
         self.distFromPlayer = GlobalMath.DistFromPlayer(self)
         self.distFromTarget = GlobalMath.Dist_noObj(self, self.targetDest[0], self.targetDest[1])
         self.direction = GlobalMath.Angle_noobj(self, self.targetDest[0], self.targetDest[1])
@@ -128,32 +133,16 @@ class Enemy(Object):
             self.xpos = round(self.xpos +self.xAcc)
             self.ypos = round(self.ypos +self.yAcc)
         elif self.waitThere <= 0:
-            self.waitThere = random.randrange(0, 2)
-            self.targetDest =(random.randrange(30, Constants.scr_width-30-self.rect.w),
-                           random.randrange(30, Constants.scr_height-30-self.rect.w))
+            self.waitThere = random.randrange(0, 200) * 0.01
+            self.targetDest = (random.randrange(30, Constants.scr_width-30-self.rect.w),
+                               random.randrange(30, Constants.scr_height-30-self.rect.w))
         if self.waitThere > 0:
             self.waitThere -= Time.deltaTime
             self.yAcc = 0
             self.xAcc = 0
 
-
-    def enemyCollision(self):
-        for enem in ObjectLists.listOfEnemies:
-            if self.rect.colliderect(enem.rect):
-                if enem.ypos <= self.ypos <= enem.ypos + enem.rect.w/2 and enem.xpos < self.xpos <= enem.xpos + enem.rect.w:
-                    self.ypos += self.speed
-                    enem.ypos -= enem.speed
-                elif enem.ypos + enem.rect.w/2 > self.ypos >= enem.rect.w and enem.xpos < self.xpos <= enem.xpos + enem.rect.w:
-                    self.ypos -= self.speed
-                    enem.ypos += enem.speed
-                if enem.xpos <= self.xpos <= enem.xpos + enem.rect.h/2 and enem.ypos < self.ypos <= enem.ypos + enem.rect.h:
-                    self.xpos += self.speed
-                    enem.xpos -= enem.speed
-                elif enem.xpos + enem.rect.h/2 > self.xpos >= enem.rect.h and enem.ypos < self.ypos <= enem.ypos + enem.rect.h:
-                    self.xpos -= self.speed
-                    enem.xpos += enem.speed
-
     def shooting(self):
+        # shoots a bomb at player at semi-random intervals
         self.bombDelayCounter -= Time.deltaTime
         if self.bombDelayCounter <= 0:
             self.bombDelayCounter = self.bombDelay + random.randrange(self.bombDelayAdderMin, self.bombDelayAdderMax)
@@ -162,5 +151,5 @@ class Enemy(Object):
             else:
                 self.newBomb = Round(self)
             self.newBomb.thrown = True
-            self.newBomb.direction = GlobalMath.AnglePlayer(self) # + random.randrange(-self.accuracyOffset, self.accuracyOffset)
-            self.newBomb.fuseOriginal = self.newBomb.fuse = self.distFromPlayer / (50*self.newBomb.speed) #  random.randrange(1, self.accuracyOffset) * 0.5
+            self.newBomb.direction = GlobalMath.AnglePlayer(self)
+            self.newBomb.fuseOriginal = self.newBomb.fuse = self.distFromPlayer / (50*self.newBomb.speed)

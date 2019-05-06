@@ -2,7 +2,8 @@
 from ExtClasses import *
 import random
 
-class ScreenController():
+
+class ScreenController():       # currently only handles screen shake (during explosions)
     def __init__(self):
         self.timer = 0
         self.order = 0
@@ -14,13 +15,13 @@ class ScreenController():
         self.shakeAmmount = 0
         self.shakeAmmountResolver =0
 
-    def shakeScreen(self, ammount, resolveTime):
+    def shakeScreen(self, ammount, resolveTime):        # call this function to shake the screen (strength, how long the shake should be)
         self.shakeAmmount = ammount
         self.shakeAmmountResolver = ammount
         self.timerOrigin = resolveTime
         self.resolveTime = resolveTime
 
-    def update(self):
+    def update(self): # gradually decrase screen shaking untill 0
         if self.timerOrigin > 0:
             self.timerOrigin -= Time.deltaTime
             self.timer += Time.deltaTime

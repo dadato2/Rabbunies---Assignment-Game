@@ -9,15 +9,15 @@ class Explosion (Object):
         ObjectLists.listAllObjects.append(self)
         ObjectLists.listOfExplosions.append(self)
         self.spriteImages = explosionSprite
-        self.scale = scale
+        self.scale = scale   # scales the explosion based on bomb type
         self.scaleImages()
         self.spriteIndex = 0
-        self.spriteDelay = 0.1
+        self.spriteDelay = 0.1  # variables for animation
         self.spriteTimer = 0
         self.sprite = self.spriteImages[0]
         self.rect = pygame.Rect(self.xpos - self.sprite.get_rect().w / 2, self.ypos - self.sprite.get_rect().h / 2,
                                 self.sprite.get_rect().w, self.sprite.get_rect().h)
-        Global.scr.shakeScreen(scale*.05, scale*0.002)
+        Global.scr.shakeScreen(scale*.05, scale*0.002)  # shake the screen based on how big the explosion is
 
     def scaleImages(self):
         for i in range(0, 12):
@@ -27,7 +27,7 @@ class Explosion (Object):
     def update(self):
         self.order = self.ypos + 1000
         self.spriteTimer += Time.deltaTime
-        if self.spriteTimer >= self.spriteDelay and self.spriteIndex < 11:
+        if self.spriteTimer >= self.spriteDelay and self.spriteIndex < 11: # animate explosion, no loop
             self.spriteTimer = 0
             self.spriteIndex += 1
 
@@ -40,4 +40,4 @@ class Explosion (Object):
 
     def draw(self, screen):
         super().draw(screen)
-        self.order = Constants.scr_height
+        self.order = Constants.scr_height  # draw the explosion on top of all sprites

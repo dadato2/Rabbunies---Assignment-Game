@@ -56,7 +56,7 @@ class Carrot(Bomb):
         self.rect = self.sprite.get_rect()
 
 
-class Cube(Bomb):
+class Cube(Bomb):  # this one is special since it is animated
     def __init__(self, src):
         super().__init__(src)
         self.explosionScale = 400

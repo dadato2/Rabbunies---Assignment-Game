@@ -11,7 +11,7 @@ class Object: # Main game object class, every game object is child of class
         self.ypos = None
         self.xy = None
         self.sprite = None
-        self.order = None
+        self.order = None  # used for sorting sprites based on (y) coordinate
         self.rect = None
 
     def update(self): # called once per frame, game logic is here

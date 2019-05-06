@@ -1,6 +1,8 @@
 from UI_Object import *
 import random
 
+# this file contains the different UI elements
+
 egg_x, egg_y = 64, 64
 
 egg_1 = makeSprite("assets/egg1.png", 4).images
@@ -8,7 +10,7 @@ for times in range(0, len(egg_1)):
     egg_1[times] = pygame.transform.scale(egg_1[times], (egg_x, egg_y))
 
 
-class UI_Health(UI_Object):
+class UI_Health(UI_Object):  # displays Player health (easter eggs because they're rabbits)
     def __init__(self):
         self.xpos = 10
         self.ypos = 10
@@ -19,7 +21,7 @@ class UI_Health(UI_Object):
             self.eggIndex.append(random.randrange(0, len(self.images)))
 
     def draw(self, screen):
-        for eggs in range(0, Global.player.Health):
+        for eggs in range(0, Global.player.Health):  # draw an egg with random egg sprite (chosen at start) for each hitpoint of player
             screen.blit(self.images[self.eggIndex[eggs]], (self.xpos + egg_x * eggs, self.ypos))
 
 
@@ -29,7 +31,7 @@ for imageIndex in range(0, len(enemyImages)):
     enemyImages[imageIndex] = pygame.transform.scale(enemyImages[imageIndex], (enemyX, enemyY))
 
 
-class UI_Enemies(UI_Object):
+class UI_Enemies(UI_Object):  # displays how many enemies are left to kill, by showing a small sprite of the enemy
     def __init__(self):
         self.xpos = 10
         self.ypos = Constants.scr_height-50
@@ -52,7 +54,7 @@ for imageIndex in range(0, len(bombImages)):
     bombImages[imageIndex] = pygame.transform.scale(bombImages[imageIndex], (bombX, bombY))
 
 
-class UI_SelectedBomb(UI_Object):
+class UI_SelectedBomb(UI_Object):  # Shows sprite of currently selected bomb and how many there are left
     def __init__(self):
         self.xpos = Constants.scr_width - 120
         self.ypos = 15

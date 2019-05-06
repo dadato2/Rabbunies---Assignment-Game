@@ -1,7 +1,8 @@
 from ExtClasses import *
 from pygame_logic import makeSprite, newSprite
 
-class UI_Object():
+
+class UI_Object():   # similar to object class, but has less logic and is drawn on top
     def __init__(self):
         self.xpos = None
         self.ypos = None

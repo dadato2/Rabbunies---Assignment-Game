@@ -8,6 +8,7 @@ from Bomb import *
 from UI_Elements import UI_Health, UI_Enemies, UI_SelectedBomb
 from ScreenControl import ScreenController
 
+# initialization
 pygame.init()
 pygame.mouse.set_visible(False)
 pygame.mixer.init()
@@ -19,15 +20,14 @@ pygame.display.set_icon(gameIcon)
 Debug = debug()
 scr = ScreenController()
 Global.scr = scr
-# Global.Sounds = sounds()
-gameLoop = True
+gameLoop = True  # is never changed to false, since quitting can always be done
 
-font_arcade_26 = pygame.font.Font('assets/arcade.ttf', 26)
+font_arcade_26 = pygame.font.Font('assets/arcade.ttf', 26)  # three different fonts
 font_arcade_40 = pygame.font.Font('assets/arcade.ttf', 40)
 font_arcade_120 = pygame.font.Font('assets/arcade.ttf', 120)
 
 
-def transition(color):
+def transition(color):   # this creates a circle in the middle of the screen and makes it 1.1 times larger every frame, is a cool transition
     size_of_Circle = 1
     while True:
         if size_of_Circle >= Constants.scr_width:
@@ -42,22 +42,22 @@ def transition(color):
         pygame.display.update()
 
 
-def showInfo(elem):
+def showInfo(elem):  #  big method that shows an info screen whenever a bomb is picked up for the first time.
     infoRect_x, infoRect_y = Constants.scr_width * 1/6, Constants.scr_height * 1/6
     infoRect = pygame.Rect(infoRect_x, infoRect_y, Constants.scr_width * 5/6-infoRect_x,
                            Constants.scr_height * 5/6-infoRect_y)
-    info_image_size = 96
+    info_image_size = 96    # info variables used to change the text and image of the info screen
     info_image = None
     info_images = None
     info_images_index = 0
     info_multiple_images = False
     info_msg_name = ""
-    info_msg_1 = ""
+    info_msg_1 = ""   # four lines of text since pygame doesn't allow for newLine character in text
     info_msg_2 = ""
     info_msg_3 = ""
     info_msg_4 = ""
     info_msg_goBack = "Press   Space   to   Continue"
-    if elem == 0:
+    if elem == 0:   # different item descriptions
         info_image = pygame.image.load("assets/bomb.png")
         info_image = pygame.transform.scale(info_image, (info_image_size, info_image_size))
         info_msg_name = "Round   Bomb"
@@ -133,7 +133,7 @@ while True:                                                                     
     screen.blit(font_arcade_120.render("Rabbunnies!", False, (255, 255, 255)), (170, 100))
     screen.blit(font_arcade_40.render("Press   Space   to   start!", False, (0, 0, 0)), (310, 400))
     screen.blit(font_arcade_40.render(help_msg_1, False, (0, 0, 0)), (320, 500))
-    if not help_msg_2 == "":
+    if not help_msg_2 == "":  # this is the help info string
         screen.blit(font_arcade_40.render(help_msg_2, False, (0, 0, 0)), (120, 550))
     if not help_msg_3 == "":
         screen.blit(font_arcade_40.render(help_msg_3, False, (0, 0, 0)), (270, 600))
@@ -272,7 +272,7 @@ while gameLoop:
         screen.blit(font_arcade_40.render("Score " + str(Global.score), False, (255, 255, 255)), (500-len(str(Global.score))*10, 400))
         screen.blit(font_arcade_40.render("Press   Space   to   restart!", False, (255, 255, 255)), (310, 500))
 
-        if pygame.key.get_pressed()[K_SPACE]:
+        if pygame.key.get_pressed()[K_SPACE]:  # space to restart
             transition(Colors.pleasant_blue)
             break
         for event in pygame.event.get():

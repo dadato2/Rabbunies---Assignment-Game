@@ -13,8 +13,8 @@ class Pickup(Object):
         self.ypos = objectSource.ypos
         self.order = self.ypos
         self.typelist = ("health", "dynamite", "round", "grenade", "carrot", "cube", "head")
-        if random.getrandbits(1):
-            self.type = self.typelist[0]
+        if random.getrandbits(1):    # 50/50 chance for it to be health or a bomb
+            self.type = self.typelist[0]   # player checks type value to see what type of pickup it is
             self.sprite = eggSprites[random.randrange(0, len(eggSprites))]
             self.sprite = pygame.transform.scale(self.sprite, (32, 32))
         else:
